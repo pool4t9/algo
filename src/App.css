@@ -1,0 +1,36 @@
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
+.main-container {
+  max-width: 350px;
+  width: 100%;
+  margin: auto;
+}
+
+.main-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.main-col {
+  width: 24%;
+  height: 40px;
+  border: 1px solid #ddd;
+  flex-basis: 24%;
+}
+
+.bg-red {
+  background-color: #f00;
+  /* border-color: #f00; */
+}
+
+.bg-green {
+  background-color: rgb(27, 162, 104);
+  /* border-color: rgb(27, 162, 104); */
+}
+
+.bg-orange{
+  background-color: rgb(237, 220, 112);
+}
