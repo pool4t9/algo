@@ -7,8 +7,12 @@ function App() {
   const [start, setStart] = useState([0, 0]);
   const [end, setEnd] = useState([size - 1, size - 1]);
   let matrix = Array(size).fill().map(() => Array(size).fill(0));
-  let ans = findPath(0, 0, 4, 4, matrix)
-  console.log(ans)
+  let mat = [[1, 0, 0, 0],
+  [1, 1, 0, 1],
+  [0, 1, 0, 0],
+  [1, 1, 1, 1]];
+  let ans = findPath(0, 0, 4, 4, mat)
+  // console.log(ans)
   return (
     <>
       <div className="main-container">
