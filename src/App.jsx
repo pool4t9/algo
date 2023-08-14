@@ -12,7 +12,7 @@ function App() {
   [0, 1, 0, 0],
   [1, 1, 1, 1]];
   let ans = findPath(0, 0, 4, 4, mat)
-  // console.log(ans)
+
   return (
     <>
       <div className="main-container">
