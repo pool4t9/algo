@@ -1,30 +1,32 @@
 
 export function findPath(i, j, n, m, arr) {
+    let ds = [];
     let paths = [];
-    let ds = []
+    let ans = [];
     helper(i, j, n, m, arr, paths, ds);
-    console.log(paths, '************')
-    return paths;
+    ans = paths.map(path => {
+        let temp = Array(n).fill().map(() => Array(m).fill(0));
+        path.forEach(point => temp[point[0]][point[1]] = 1);
+        return temp;
+    });
+    return ans;
 }
 
-function helper(i, j, n, m, maze, ans, ds) {
-    if (i < 0 || j < 0 || i >= n || j >= m || maze[i][j] == 0) return false;
+function helper(i, j, n, m, maze, paths, ds) {
+    if (i < 0 || j < 0 || i >= n || j >= m || maze[i][j] == 0) return
     if (i == n - 1 && j == m - 1) {
-        console.log('here')
         ds.push([i, j]);
-        ans.push(ds);
+        paths.push([...ds]);
         ds.pop();
-        return true;
+        return;
     }
     maze[i][j] = 0;
     ds.push([i, j]);
-
-    helper(i - 1, j, n, m, maze, ans, ds);
-    helper(i + 1, j, n, m, maze, ans, ds);
-    helper(i, j - 1, n, m, maze, ans, ds);
-    helper(i, j + 1, n, m, maze, ans, ds);
-    // console.log(ds)
+    const dirs = [-1, 0, 1, 0, -1]
+    for (let k = 0; k < 4; k++) {
+        helper(i + dirs[k], j + dirs[k + 1], n, m, maze, paths, ds)
+    }
     ds.pop();
     maze[i][j] = 1;
-    return false;
+    return;
 }
