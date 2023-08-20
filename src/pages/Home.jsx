@@ -1,15 +1,13 @@
-import React from 'react'
-
-import Hero from '../components/Hero';
+import Hero from "../components/Hero";
 // import Form from '../components/Form'
 
 const Home = () => {
-    return (
-        <>
-            <Hero />
-            {/* <Form /> */}
-        </>
-    )
-}
+  return (
+    <>
+      <Hero />
+      {/* <Form /> */}
+    </>
+  );
+};
 
 export default Home;
