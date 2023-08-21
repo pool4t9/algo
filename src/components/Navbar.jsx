@@ -1,19 +1,11 @@
 import {
     Box,
     Flex,
-    Avatar,
-    Text,
     Button,
-    Menu,
-    MenuButton,
-    MenuList,
-    MenuItem,
-    MenuDivider,
-    useDisclosure,
+    // useDisclosure,
     useColorModeValue,
     Stack,
     useColorMode,
-    Center,
 } from '@chakra-ui/react'
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 import { Link } from 'react-router-dom'
@@ -23,7 +15,7 @@ import { Link } from 'react-router-dom'
 
 const Navbar = () => {
     const { colorMode, toggleColorMode } = useColorMode()
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    // const { isOpen, onOpen, onClose } = useDisclosure()
     return (
         <>
             <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
