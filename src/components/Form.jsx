@@ -1,98 +1,55 @@
-'use client'
+import React, { useState } from 'react';
+import { ChakraProvider, CSSReset, Box, Button, Input, FormControl, FormLabel } from '@chakra-ui/react';
+import Matrix from './Matrix';
 
-import {  useState } from 'react'
-import {
-    Stack,
-    FormControl,
-    Input,
-    Button,
-    useColorModeValue,
-    Heading,
-    Text,
-    Container,
-    Flex,
-} from '@chakra-ui/react'
-import { CheckIcon } from '@chakra-ui/icons'
+function MazeForm({ rows, setRows, columns, setColumns }) {
+  // const [rows, setRows] = useState(5); // Default number of rows
+  // const [columns, setColumnss] = useState(5); // Default number of columns
+  const [blockedIndex, setBlockedIndex] = useState('0,0'); // Default blocked index
 
-export default function Simple() {
-    const [email, setEmail] = useState('')
-    const [state, setState] = useState ('initial')
-    // < 'initial' | 'submitting' | 'success' > 
-    const [error, setError] = useState(false)
+  const handleRowsChange = (e) => {
+    setRows(parseInt(e.target.value || 3));
+  };
 
-    return (
-        <Flex
-            align={'center'}
-            justify={'center'}
-            >
-            <Container
-                maxW={'lg'}
-                bg={useColorModeValue('white', 'whiteAlpha.100')}
-                boxShadow={'xl'}
-                rounded={'lg'}
-                p={6}>
-                <Heading
-                    as={'h2'}
-                    fontSize={{ base: 'xl', sm: '2xl' }}
-                    textAlign={'center'}
-                    mb={5}>
-                    Subscribe to our Newsletter
-                </Heading>
-                <Stack
-                    direction={{ base: 'column', md: 'row' }}
-                    as={'form'}
-                    spacing={'12px'}
-                    onSubmit={(e) => {
-                        e.preventDefault()
-                        setError(false)
-                        setState('submitting')
+  const handleColumnsChange = (e) => {
+    setColumns(parseInt(e.target.value  || 3));
+  };
 
-                        // remove this code and implement your submit logic right here
-                        setTimeout(() => {
-                            if (email === 'fail@example.com') {
-                                setError(true)
-                                setState('initial')
-                                return
-                            }
+  const handleBlockedIndexChange = (e) => {
+    setBlockedIndex(e.target.value);
+  };
 
-                            setState('success')
-                        }, 1000)
-                    }}>
-                    <FormControl>
-                        <Input
-                            variant={'solid'}
-                            borderWidth={1}
-                            color={'gray.800'}
-                            _placeholder={{
-                                color: 'gray.400',
-                            }}
-                            borderColor={useColorModeValue('gray.300', 'gray.700')}
-                            id={'email'}
-                            type={'email'}
-                            required
-                            placeholder={'Your Email'}
-                            aria-label={'Your Email'}
-                            value={email}
-                            disabled={state !== 'initial'}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </FormControl>
-                    <FormControl w={{ base: '100%', md: '40%' }}>
-                        <Button
-                            colorScheme={state === 'success' ? 'green' : 'blue'}
-                            isLoading={state === 'submitting'}
-                            w="100%"
-                            type={state === 'success' ? 'button' : 'submit'}>
-                            {state === 'success' ? <CheckIcon /> : 'Submit'}
-                        </Button>
-                    </FormControl>
-                </Stack>
-                <Text mt={2} textAlign={'center'} color={error ? 'red.500' : 'gray.500'}>
-                    {error
-                        ? 'Oh no an error occured! 😢 Please try again later.'
-                        : "You won't receive any spam! ✌️"}
-                </Text>
-            </Container>
-        </Flex>
-    )
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // You can handle the form submission here, e.g., update the matrix state with the blocked index.
+  };
+
+  return (
+    <Box p={4}>
+      <form onSubmit={handleSubmit}>
+        <FormControl>
+          <FormLabel htmlFor="rows">Rows:</FormLabel>
+          <Input type="number" id="rows" value={rows} onChange={handleRowsChange} />
+        </FormControl>
+
+        <FormControl mt={2}>
+          <FormLabel htmlFor="columns">Columns:</FormLabel>
+          <Input type="number" id="columns" value={columns} onChange={handleColumnsChange} />
+        </FormControl>
+
+        {/* <FormControl mt={2}>
+          <FormLabel htmlFor="blockedIndex">Blocked Index (e.g., 0,0):</FormLabel>
+          <Input type="text" id="blockedIndex" value={blockedIndex} onChange={handleBlockedIndexChange} />
+        </FormControl> */}
+
+        <Button mt={4} colorScheme="teal" type="submit">
+          Create Matrix
+        </Button>
+      </form>
+
+      {/* <Matrix rows={rows} columns={columns} blockedIndex={blockedIndex} /> */}
+    </Box>
+  );
 }
+
+export default MazeForm;

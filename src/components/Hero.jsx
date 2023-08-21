@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link as ReactRouterLink } from "react-router-dom";
 import {
   Box,
   Heading,
@@ -39,18 +39,17 @@ const Hero = () => {
           alignSelf={'center'}
           position={'relative'}>
           <Button
+            as={ReactRouterLink}
             colorScheme={'green'}
             bg={'green.400'}
             rounded={'full'}
             px={6}
+            to={'/maze'}
             _hover={{
               bg: 'green.500',
             }}>
             Get Started
           </Button>
-          {/* <Button variant={'link'} colorScheme={'blue'} size={'sm'}>
-            Learn more
-          </Button> */}
           <Box>
             <Icon
               as={Arrow}

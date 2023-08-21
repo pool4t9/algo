@@ -1,8 +1,7 @@
 "use client";
 
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { Box, Button, Heading, Text } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
-import { Link as ChakraLink } from "@chakra-ui/react";
 
 const NotFound = () => {
   return (
@@ -23,18 +22,16 @@ const NotFound = () => {
         The page you&apos;re looking for does not seem to exist
       </Text>
 
-      {/* <Button
-                colorScheme="teal"
-                bgGradient="linear(to-r, teal.400, teal.500, teal.600)"
-                color="white"
-                variant="solid"
-                href='/'
-            >
-                Go to Home
-            </Button> */}
-      <ChakraLink as={ReactRouterLink} to="/">
-        Home
-      </ChakraLink>
+      <Button
+        as={ReactRouterLink}
+        colorScheme="teal"
+        bgGradient="linear(to-r, teal.400, teal.500, teal.600)"
+        color="white"
+        variant="solid"
+        to="/"
+      >
+        Go to Home
+      </Button>
     </Box>
   );
 };

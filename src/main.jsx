@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { CSSReset, ChakraProvider, extendTheme } from "@chakra-ui/react";
 import * as ReactDOM from "react-dom/client";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
@@ -20,6 +20,7 @@ const rootElement = document.getElementById("root");
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
+      <CSSReset />
       <BrowserRouter basename="/">
         <App />
       </BrowserRouter>

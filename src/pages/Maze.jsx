@@ -1,82 +1,48 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { findPath } from "../utils";
-import {
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-  Stack,
-  Container,
-  FormControl,
-  FormLabel,
-  Button,
-} from "@chakra-ui/react";
+import { Container } from "@chakra-ui/react";
+import MazeForm from "../components/Form";
 
 function Maze() {
-//   const [size, setsize] = useState(5);
-//   const [start, setStart] = useState([0, 0]);
-//   const [end, setEnd] = useState([size - 1, size - 1]);
-//   let matrix = Array(size)
-//     .fill()
-//     .map(() => Array(size).fill(0));
+  //   const [size, setsize] = useState(5);
+  //   const [start, setStart] = useState([0, 0]);
+  //   const [end, setEnd] = useState([size - 1, size - 1]);
+  //   let matrix = Array(size)
+  //     .fill()
+  //     .map(() => Array(size).fill(0));
   const [row, setRow] = useState(5);
   const [column, setColumn] = useState(5);
   // const submit = useSubmit();
-  let mat = [
+  let matri = [
     [1, 0, 0, 0, 0],
     [1, 1, 1, 1, 1],
     [1, 1, 1, 0, 1],
     [0, 0, 0, 0, 1],
     [0, 0, 0, 0, 1],
   ];
-  let ans = findPath(0, 0, row, column, mat);
+  let matrix = useMemo(
+    () =>
+      Array(row)
+        .fill()
+        .map(() => Array(column).fill(1)),
+    [row, column]
+  );
+  let ans = useMemo(() => findPath(0, 0, row, column, matri), [row, column]);
 
   return (
     <>
-      <Container alignItems="center" justifyContent="center">
-        <Stack>
-          <FormControl>
-            <FormLabel>Rows</FormLabel>
-            <NumberInput
-              defaultValue={3}
-              min={3}
-              max={12}
-              onChange={(valueString) => setRow(JSON.parse(valueString || 3))}
-            >
-              <NumberInputField />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput>
-          </FormControl>
-          <FormControl>
-            <FormLabel>Column</FormLabel>
-            <NumberInput
-              defaultValue={3}
-              min={3}
-              max={12}
-              onChange={(valueString) =>
-                setColumn(JSON.parse(valueString || 3))
-              }
-            >
-              <NumberInputField />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput>
-          </FormControl>
-          <FormControl w={{ base: "100%", md: "40%" }}>
-            <Button w="100%">Genearte Matrix</Button>
-          </FormControl>
-        </Stack>
+      <Container>
+        <MazeForm
+          setRows={setRow}
+          setColumns={setColumn}
+          rows={row}
+          columns={column}
+        />
       </Container>
 
       <div className="main-container">
         <div className="main-row">
-          {mat.map((mat, i) => {
+          {matrix.map((mat, i) => {
             return mat.map((item, j) => (
               <div
                 key={Math.random() * 100}
