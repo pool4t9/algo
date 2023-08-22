@@ -1,27 +1,26 @@
-import React, { useState } from 'react';
-import { ChakraProvider, CSSReset, Box, Button, Input, FormControl, FormLabel } from '@chakra-ui/react';
-import Matrix from './Matrix';
+import { useContext } from "react";
+import { Box, Button, Input, FormControl, FormLabel } from "@chakra-ui/react";
+import { MazeContext } from "../context/maze";
+// import Matrix from './Matrix';
 
-function MazeForm({ rows, setRows, columns, setColumns }) {
-  // const [rows, setRows] = useState(5); // Default number of rows
-  // const [columns, setColumnss] = useState(5); // Default number of columns
-  const [blockedIndex, setBlockedIndex] = useState('0,0'); // Default blocked index
+function MazeForm() {
+  console.log("mazeForm");
+  const { rows, columns, setRows, setColumns } = useContext(MazeContext);
 
   const handleRowsChange = (e) => {
+    if (parseInt(e.target.value) <= 0) setRows(1);
     setRows(parseInt(e.target.value || 3));
   };
 
   const handleColumnsChange = (e) => {
-    setColumns(parseInt(e.target.value  || 3));
-  };
-
-  const handleBlockedIndexChange = (e) => {
-    setBlockedIndex(e.target.value);
+    if (parseInt(e.target.value) <= 0) setColumns(1);
+    setColumns(parseInt(e.target.value || 3));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // You can handle the form submission here, e.g., update the matrix state with the blocked index.
+    // setPaths(findPath(rows, columns))
   };
 
   return (
@@ -29,25 +28,28 @@ function MazeForm({ rows, setRows, columns, setColumns }) {
       <form onSubmit={handleSubmit}>
         <FormControl>
           <FormLabel htmlFor="rows">Rows:</FormLabel>
-          <Input type="number" id="rows" value={rows} onChange={handleRowsChange} />
+          <Input
+            type="number"
+            id="rows"
+            value={rows}
+            onChange={handleRowsChange}
+          />
         </FormControl>
 
         <FormControl mt={2}>
           <FormLabel htmlFor="columns">Columns:</FormLabel>
-          <Input type="number" id="columns" value={columns} onChange={handleColumnsChange} />
+          <Input
+            type="number"
+            id="columns"
+            value={columns}
+            onChange={handleColumnsChange}
+          />
         </FormControl>
 
-        {/* <FormControl mt={2}>
-          <FormLabel htmlFor="blockedIndex">Blocked Index (e.g., 0,0):</FormLabel>
-          <Input type="text" id="blockedIndex" value={blockedIndex} onChange={handleBlockedIndexChange} />
-        </FormControl> */}
-
         <Button mt={4} colorScheme="teal" type="submit">
-          Create Matrix
+          Generate path
         </Button>
       </form>
-
-      {/* <Matrix rows={rows} columns={columns} blockedIndex={blockedIndex} /> */}
     </Box>
   );
 }

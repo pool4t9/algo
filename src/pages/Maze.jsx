@@ -2,42 +2,40 @@ import { useMemo, useState } from "react";
 import { findPath } from "../utils";
 import { Container } from "@chakra-ui/react";
 import MazeForm from "../components/Form";
+import { MazeContext } from "../context/maze";
 
 function Maze() {
-  //   const [size, setsize] = useState(5);
-  //   const [start, setStart] = useState([0, 0]);
-  //   const [end, setEnd] = useState([size - 1, size - 1]);
-  //   let matrix = Array(size)
-  //     .fill()
-  //     .map(() => Array(size).fill(0));
-  const [row, setRow] = useState(5);
-  const [column, setColumn] = useState(5);
-  // const submit = useSubmit();
-  let matri = [
-    [1, 0, 0, 0, 0],
-    [1, 1, 1, 1, 1],
-    [1, 1, 1, 0, 1],
-    [0, 0, 0, 0, 1],
-    [0, 0, 0, 0, 1],
-  ];
-  let matrix = useMemo(
+  console.log("Maze");
+  const [rows, setRows] = useState(3);
+  const [columns, setColumns] = useState(5);
+  // const [paths, setPaths] = useState([]);
+  // const matri = [
+  //   [1, 0, 0, 0, 0],
+  //   [1, 1, 1, 1, 1],
+  //   [1, 1, 1, 0, 1],
+  //   [0, 0, 0, 0, 1],
+  //   [0, 0, 0, 0, 1],
+  // ];
+
+  const matrix = useMemo(
     () =>
-      Array(row)
+      Array(rows)
         .fill()
-        .map(() => Array(column).fill(1)),
-    [row, column]
+        .map(() => Array(columns).fill(0)),
+    [rows, columns]
   );
-  let ans = useMemo(() => findPath(0, 0, row, column, matri), [row, column]);
+
+  let ans = useMemo(
+    () => findPath(0, 0, rows, columns, matrix),
+    [rows, columns, matrix]
+  );
 
   return (
-    <>
+    <MazeContext.Provider
+      value={{ rows, columns, setRows, setColumns }}
+    >
       <Container>
-        <MazeForm
-          setRows={setRow}
-          setColumns={setColumn}
-          rows={row}
-          columns={column}
-        />
+        <MazeForm />
       </Container>
 
       <div className="main-container">
@@ -78,7 +76,7 @@ function Maze() {
           ))}
         </div>
       </div>
-    </>
+    </MazeContext.Provider>
   );
 }
 
