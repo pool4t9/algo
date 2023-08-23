@@ -9,12 +9,12 @@ function MazeForm() {
 
   const handleRowsChange = (e) => {
     if (parseInt(e.target.value) <= 0) setRows(1);
-    setRows(parseInt(e.target.value || 3));
+    setRows(parseInt(e.target.value || 0));
   };
 
   const handleColumnsChange = (e) => {
     if (parseInt(e.target.value) <= 0) setColumns(1);
-    setColumns(parseInt(e.target.value || 3));
+    setColumns(parseInt(e.target.value || 0));
   };
 
   const handleSubmit = (e) => {

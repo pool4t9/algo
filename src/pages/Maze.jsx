@@ -7,7 +7,7 @@ import { MazeContext } from "../context/maze";
 function Maze() {
   console.log("Maze");
   const [rows, setRows] = useState(3);
-  const [columns, setColumns] = useState(5);
+  const [columns, setColumns] = useState(3);
   // const [paths, setPaths] = useState([]);
   // const matri = [
   //   [1, 0, 0, 0, 0],
@@ -21,7 +21,7 @@ function Maze() {
     () =>
       Array(rows)
         .fill()
-        .map(() => Array(columns).fill(0)),
+        .map(() => Array(columns).fill(1)),
     [rows, columns]
   );
 
@@ -29,11 +29,20 @@ function Maze() {
     () => findPath(0, 0, rows, columns, matrix),
     [rows, columns, matrix]
   );
+  const toggleBlok = (e, i, j) => {
+    matrix[i][j] = !matrix[i][j];
+    console.log(e.target, i,j);
+    console.log(e.target.classList.toggle('bg-red') )
+    // console.log(matrix)
+  };
+
+  const style = {
+    width: `${100 / columns}%`,
+    flexBasis: `${100 / columns}%`,
+  };
 
   return (
-    <MazeContext.Provider
-      value={{ rows, columns, setRows, setColumns }}
-    >
+    <MazeContext.Provider value={{ rows, columns, setRows, setColumns }}>
       <Container>
         <MazeForm />
       </Container>
@@ -47,6 +56,8 @@ function Maze() {
                 className={`main-col ${i == 0 && j == 0 ? "bg-orange" : ""}  ${
                   !item ? "bg-red" : ""
                 }`}
+                style={style}
+                onClick={(e) => toggleBlok(e, i, j)}
               ></div>
             ));
           })}
