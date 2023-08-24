@@ -3,6 +3,7 @@ export function findPath(i, j, n, m, arr) {
   let paths = [];
   let ans = [];
   helper(i, j, n, m, arr, paths, ds);
+  console.log(paths)
   ans = paths.map((path) => {
     let temp = Array(n)
       .fill()
@@ -12,6 +13,12 @@ export function findPath(i, j, n, m, arr) {
   });
   return ans;
 }
+
+/**
+ *
+ * @description 1--> path, 0--> block
+ * @returns
+ */
 
 function helper(i, j, n, m, maze, paths, ds) {
   if (i < 0 || j < 0 || i >= n || j >= m || maze[i][j] == 0) return;

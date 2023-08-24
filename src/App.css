@@ -23,14 +23,27 @@ body {
 
 .bg-red {
   background-color: #f00;
-  /* border-color: #f00; */
 }
 
 .bg-green {
   background-color: rgb(27, 162, 104);
-  /* border-color: rgb(27, 162, 104); */
 }
 
-.bg-orange{
+.bg-orange {
   background-color: rgb(237, 220, 112);
+}
+
+.solution {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.sol {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 200px;
+  margin: 10px;
 }
