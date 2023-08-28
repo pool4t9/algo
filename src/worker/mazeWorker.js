@@ -1,17 +1,16 @@
-const fib = (n) => (n < 2 ? n : fib(n - 1) + fib(n - 2));
+export default () => {
+  // eslint-disable-next-line no-restricted-globals
+  self.onmessage = (e) => {
+    const { i, j, row, column, matrix } = e.data;
 
-onmessage = (e) => {
-  const { num, i, j, row, column, matrix } = e.data;
+    const startTime = new Date().getTime();
+    const paths = findPath(i, j, row, column, matrix);
 
-  const startTime = new Date().getTime();
-  const fibNum = fib(num);
-  const paths = findPath(i, j, row, column, matrix);
-
-  postMessage({
-    fibNum,
-    paths,
-    time: new Date().getTime() - startTime,
-  });
+    postMessage({
+      paths,
+      time: new Date().getTime() - startTime,
+    });
+  };
 };
 
 export function findPath(i, j, n, m, arr) {

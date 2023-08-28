@@ -1,11 +1,18 @@
 import { useContext } from "react";
-import { Box, Input, FormControl, FormLabel } from "@chakra-ui/react";
+import {
+  Box,
+  Input,
+  FormControl,
+  FormLabel,
+  Stack,
+  Radio,
+  RadioGroup,
+} from "@chakra-ui/react";
 import { MazeContext } from "../context/maze";
-// import Matrix from './Matrix';
 
 function MazeForm() {
-  console.log("mazeForm");
-  const { rows, columns, setRows, setColumns } = useContext(MazeContext);
+  const { rows, columns, setRows, setColumns, value, setValue } =
+    useContext(MazeContext);
 
   const handleRowsChange = (e) => {
     if (parseInt(e.target.value) <= 0) setRows(1);
@@ -37,6 +44,16 @@ function MazeForm() {
           value={columns}
           onChange={handleColumnsChange}
         />
+      </FormControl>
+      <FormControl mt={2}>
+        <FormLabel htmlFor="columns">Select</FormLabel>
+        <RadioGroup onChange={setValue} value={value}>
+          <Stack direction="row">
+            <Radio value="start">Start Blok</Radio>
+            <Radio value="end">End Blok</Radio>
+            <Radio value="block">Block Blok</Radio>
+          </Stack>
+        </RadioGroup>
       </FormControl>
     </Box>
   );

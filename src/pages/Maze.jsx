@@ -9,6 +9,7 @@ function Maze() {
   const [columns, setColumns] = useState(3);
   const [paths, setPaths] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [value, setValue] = useState("start");
 
   const matrix = useMemo(
     () =>
@@ -20,7 +21,11 @@ function Maze() {
 
   const toggleBlok = (e, i, j) => {
     matrix[i][j] = 1 - matrix[i][j];
-    e.target.classList.toggle("bg-red");
+    if (value === "start") {
+    } else if (value === "end") {
+    } else {
+      e.target.classList.toggle("bg-red");
+    }
   };
 
   const style = {
@@ -38,9 +43,11 @@ function Maze() {
     setPaths(findPath(0, 0, rows, columns, matrix));
     setLoading(false);
   };
-
+  console.log(paths.length, "ans");
   return (
-    <MazeContext.Provider value={{ rows, columns, setRows, setColumns }}>
+    <MazeContext.Provider
+      value={{ rows, columns, setRows, setColumns, value, setValue }}
+    >
       <Container>
         <MazeForm />
 
