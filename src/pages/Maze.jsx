@@ -1,8 +1,9 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { findPath } from "../utils";
-import { Button, Container, Spinner } from "@chakra-ui/react";
+import { Box, Button, Container, SimpleGrid, Spinner } from "@chakra-ui/react";
 import MazeForm from "../components/Form";
 import { MazeContext } from "../context/maze";
+import Instructions from "../components/Instructions";
 
 function Maze() {
   const [rows, setRows] = useState(3);
@@ -10,22 +11,49 @@ function Maze() {
   const [paths, setPaths] = useState([]);
   const [loading, setLoading] = useState(false);
   const [value, setValue] = useState("start");
-
-  const matrix = useMemo(
-    () =>
-      Array(rows)
-        .fill()
-        .map(() => Array(columns).fill(1)),
-    [rows, columns]
+  const [matrix, setMatrix] = useState(
+    Array(rows)
+      .fill()
+      .map(() => Array(columns).fill(1))
   );
+  
+  const [points, setPoints] = useState({
+    start: [0, 0],
+    end: [rows - 1, columns - 1],
+    block: [],
+  });
 
   const toggleBlok = (e, i, j) => {
-    matrix[i][j] = 1 - matrix[i][j];
+    const newMatrix = [...matrix];
+
     if (value === "start") {
+      if (newMatrix[i][j] == -1) newMatrix[i][j] = 1;
+      else {
+        matrix.forEach((col, idx) => {
+          col.forEach((item, jdy) => {
+            if (item === -1) {
+              newMatrix[idx][jdy] = 1;
+            }
+          });
+        });
+        newMatrix[i][j] = -1;
+      }
+      setPoints({ ...points, start: [i, j] });
     } else if (value === "end") {
-    } else {
-      e.target.classList.toggle("bg-red");
+      if (newMatrix[i][j] == 2) newMatrix[i][j] = 1;
+      else {
+        matrix.forEach((col, idx) => {
+          col.forEach((item, jdy) => {
+            if (item === 2) newMatrix[idx][jdy] = 1;
+          });
+        });
+        newMatrix[i][j] = 2;
+        setPoints({ ...points, end: [i, j] });
+      }
+    } else if (value === "block") {
+      newMatrix[i][j] = newMatrix[i][j] != 0 ? 0 : 1;
     }
+    setMatrix(newMatrix);
   };
 
   const style = {
@@ -40,41 +68,53 @@ function Maze() {
     setLoading(true);
     setPaths([]);
     await delay(1000);
-    setPaths(findPath(0, 0, rows, columns, matrix));
+    const { start, end } = points;
+    setPaths(
+      findPath(start[0], start[1], end[0], end[1], rows, columns, matrix)
+    );
     setLoading(false);
+    // console.log(paths, "pathspaths");
   };
-  console.log(paths.length, "ans");
+
   return (
     <MazeContext.Provider
       value={{ rows, columns, setRows, setColumns, value, setValue }}
     >
-      <Container>
-        <MazeForm />
-
-        <div className="main-container">
-          <div className="main-row">
-            {matrix.map((mat, i) => {
-              return mat.map((item, j) => (
-                <div
-                  key={Math.random() * 100}
-                  className={`main-col ${
-                    i == 0 && j == 0 ? "bg-orange" : ""
-                  }  ${!item ? "bg-red" : ""}`}
-                  style={style}
-                  onClick={(e) => toggleBlok(e, i, j)}
-                ></div>
-              ));
-            })}
-          </div>
-        </div>
-        <Button
-          mt={4}
-          colorScheme="teal"
-          type="submit"
-          onClick={generatePossiblePaths}
-        >
-          Generate path
-        </Button>
+      <Container maxW={"1200px"} padding={"10px"}>
+        <SimpleGrid columns={{ sm: 1, md: 2 }} spacing={20}>
+          <Box>
+            <MazeForm />
+            <div className="main-container">
+              <div className="main-row">
+                {matrix.map((mat, i) => {
+                  return mat.map((item, j) => (
+                    <div
+                      key={Math.random() * 100}
+                      className={`main-col  ${item === -1 && "bg-orange"} ${
+                        item === 0 && "bg-red"
+                      } ${item === 2 && "bg-green"}`}
+                      style={style}
+                      onClick={(e) => toggleBlok(e, i, j)}
+                    >
+                      ({i},{j})
+                    </div>
+                  ));
+                })}
+              </div>
+            </div>
+            <Button
+              mt={4}
+              colorScheme="teal"
+              type="submit"
+              onClick={generatePossiblePaths}
+            >
+              Generate path
+            </Button>
+          </Box>
+          <Box>
+            <Instructions />
+          </Box>
+        </SimpleGrid>
       </Container>
       <div className=" solution">
         {loading && <Spinner size="xl" />}

@@ -1,9 +1,9 @@
-export function findPath(i, j, n, m, arr) {
+export function findPath(i, j, di, dj, n, m, arr) {
   let ds = [];
   let paths = [];
   let ans = [];
-  helper(i, j, n, m, arr, paths, ds);
-  console.log(paths)
+  helper(i, j, di, dj, n, m, arr, paths, ds);
+  console.log(paths);
   ans = paths.map((path) => {
     let temp = Array(n)
       .fill()
@@ -20,9 +20,9 @@ export function findPath(i, j, n, m, arr) {
  * @returns
  */
 
-function helper(i, j, n, m, maze, paths, ds) {
+function helper(i, j, di, dj, n, m, maze, paths, ds) {
   if (i < 0 || j < 0 || i >= n || j >= m || maze[i][j] == 0) return;
-  if (i == n - 1 && j == m - 1) {
+  if (i == di && j == dj) {
     ds.push([i, j]);
     paths.push([...ds]);
     ds.pop();
@@ -32,7 +32,7 @@ function helper(i, j, n, m, maze, paths, ds) {
   ds.push([i, j]);
   const dirs = [-1, 0, 1, 0, -1];
   for (let k = 0; k < 4; k++) {
-    helper(i + dirs[k], j + dirs[k + 1], n, m, maze, paths, ds);
+    helper(i + dirs[k], j + dirs[k + 1], di, dj, n, m, maze, paths, ds);
   }
   ds.pop();
   maze[i][j] = 1;
