@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { findPath } from "../utils";
 import { Box, Button, Container, SimpleGrid, Spinner } from "@chakra-ui/react";
 import MazeForm from "../components/Form";
 import { MazeContext } from "../context/maze";
 import Instructions from "../components/Instructions";
+import mazeInstruction from "../rules/maze";
 
 function Maze() {
   const [rows, setRows] = useState(3);
@@ -16,7 +17,15 @@ function Maze() {
       .fill()
       .map(() => Array(columns).fill(1))
   );
-  
+
+  useEffect(() => {
+    setMatrix(
+      Array(rows)
+        .fill()
+        .map(() => Array(columns).fill(1))
+    );
+  }, [rows, columns]);
+
   const [points, setPoints] = useState({
     start: [0, 0],
     end: [rows - 1, columns - 1],
@@ -112,7 +121,7 @@ function Maze() {
             </Button>
           </Box>
           <Box>
-            <Instructions />
+            <Instructions data={mazeInstruction} />
           </Box>
         </SimpleGrid>
       </Container>
