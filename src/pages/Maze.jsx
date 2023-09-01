@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { findPath } from "../utils";
 import { Box, Button, Container, SimpleGrid, Spinner } from "@chakra-ui/react";
 import MazeForm from "../components/Form";
@@ -7,36 +7,51 @@ import Instructions from "../components/Instructions";
 import mazeInstruction from "../rules/maze";
 
 function Maze() {
-  const [rows, setRows] = useState(3);
-  const [columns, setColumns] = useState(3);
   const [paths, setPaths] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [value, setValue] = useState("start");
-  const [matrix, setMatrix] = useState(
-    Array(rows)
-      .fill()
-      .map(() => Array(columns).fill(1))
-  );
-
-  useEffect(() => {
-    setMatrix(
-      Array(rows)
-        .fill()
-        .map(() => Array(columns).fill(1))
-    );
-  }, [rows, columns]);
-
+  const [matrix, setMatrix] = useState([]);
   const [points, setPoints] = useState({
     start: [0, 0],
-    end: [rows - 1, columns - 1],
+    end: [2, 2],
     block: [],
   });
+  const [style, setStyle] = useState({
+    width: "33.33px",
+    flexBasis: "33.33px",
+  });
+  const [formValue, setFormValue] = useState({
+    rows: 3,
+    columns: 3,
+    left: "false",
+    up: "false",
+    right: "false",
+    down: "false",
+    selectedValue: "start",
+    diagonalUpperLeft: "false",
+    diagonalUpperRight: "false",
+    diagonalDownLeft: "false",
+    diagonalDownRight: "false",
+  });
+  const { rows, columns, selectedValue } = formValue;
+  useEffect(() => {
+    const { start, end } = points;
+    if (rows >= 3 && columns >= 3) {
+      const mat = Array(Number(rows))
+        .fill()
+        .map(() => Array(Number(columns)).fill(1));
+      mat[start[0]][start[1]] = -1;
+      mat[end[0]][end[1]] = 2;
+      setMatrix(mat);
+      setStyle({ width: `${100 / columns}%`, flexBasis: `${100 / columns}%` });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rows, columns]);
 
   const toggleBlok = (e, i, j) => {
     const newMatrix = [...matrix];
 
-    if (value === "start") {
-      if (newMatrix[i][j] == -1) newMatrix[i][j] = 1;
+    if (selectedValue === "start") {
+      if (newMatrix[i][j] == -1) return;
       else {
         matrix.forEach((col, idx) => {
           col.forEach((item, jdy) => {
@@ -48,8 +63,8 @@ function Maze() {
         newMatrix[i][j] = -1;
       }
       setPoints({ ...points, start: [i, j] });
-    } else if (value === "end") {
-      if (newMatrix[i][j] == 2) newMatrix[i][j] = 1;
+    } else if (selectedValue === "end") {
+      if (newMatrix[i][j] == 2) return;
       else {
         matrix.forEach((col, idx) => {
           col.forEach((item, jdy) => {
@@ -59,41 +74,48 @@ function Maze() {
         newMatrix[i][j] = 2;
         setPoints({ ...points, end: [i, j] });
       }
-    } else if (value === "block") {
+    } else if (selectedValue === "block") {
       newMatrix[i][j] = newMatrix[i][j] != 0 ? 0 : 1;
     }
     setMatrix(newMatrix);
   };
 
-  const style = {
-    width: `${100 / columns}%`,
-    flexBasis: `${100 / columns}%`,
-  };
-
   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+
+  const helper = useCallback(() => {
+    const { start, end } = points;
+    return findPath(
+      start[0],
+      start[1],
+      end[0],
+      end[1],
+      Number(rows),
+      Number(columns),
+      matrix
+    );
+  }, [columns, matrix, points, rows]);
 
   const generatePossiblePaths = async (e) => {
     e.preventDefault();
     setLoading(true);
     setPaths([]);
-    await delay(1000);
-    const { start, end } = points;
-    setPaths(
-      findPath(start[0], start[1], end[0], end[1], rows, columns, matrix)
-    );
+    await delay(100);
+    setPaths(helper());
     setLoading(false);
-    // console.log(paths, "pathspaths");
   };
-
+  // console.log(formValue);
   return (
     <MazeContext.Provider
-      value={{ rows, columns, setRows, setColumns, value, setValue }}
+      value={{
+        formValue,
+        setFormValue,
+      }}
     >
       <Container maxW={"1200px"} padding={"10px"}>
         <SimpleGrid columns={{ sm: 1, md: 2 }} spacing={20}>
           <Box>
             <MazeForm />
-            <div className="main-container">
+            <Box mt={4}>
               <div className="main-row">
                 {matrix.map((mat, i) => {
                   return mat.map((item, j) => (
@@ -110,7 +132,7 @@ function Maze() {
                   ));
                 })}
               </div>
-            </div>
+            </Box>
             <Button
               mt={4}
               colorScheme="teal"
