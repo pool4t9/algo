@@ -22,17 +22,10 @@ function Maze() {
   const [formValue, setFormValue] = useState({
     rows: 3,
     columns: 3,
-    left: "false",
-    up: "false",
-    right: "false",
-    down: "false",
     selectedValue: "start",
-    diagonalUpperLeft: "false",
-    diagonalUpperRight: "false",
-    diagonalDownLeft: "false",
-    diagonalDownRight: "false",
+    diections: [],
   });
-  const { rows, columns, selectedValue } = formValue;
+  const { rows, columns, selectedValue, diections } = formValue;
   useEffect(() => {
     const { start, end } = points;
     if (rows >= 3 && columns >= 3) {
@@ -91,9 +84,10 @@ function Maze() {
       end[1],
       Number(rows),
       Number(columns),
-      matrix
+      matrix,
+      diections
     );
-  }, [columns, matrix, points, rows]);
+  }, [columns, matrix, points, rows, diections]);
 
   const generatePossiblePaths = async (e) => {
     e.preventDefault();
@@ -103,7 +97,7 @@ function Maze() {
     setPaths(helper());
     setLoading(false);
   };
-  // console.log(formValue);
+
   return (
     <MazeContext.Provider
       value={{
@@ -120,7 +114,7 @@ function Maze() {
                 {matrix.map((mat, i) => {
                   return mat.map((item, j) => (
                     <div
-                      key={Math.random() * 100}
+                      key={Math.random() * 100 * i * j}
                       className={`main-col  ${item === -1 && "bg-orange"} ${
                         item === 0 && "bg-red"
                       } ${item === 2 && "bg-green"}`}

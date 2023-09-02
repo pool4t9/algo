@@ -7,7 +7,6 @@ import {
   Radio,
   RadioGroup,
   SimpleGrid,
-  Box,
   FormErrorMessage,
 } from "@chakra-ui/react";
 import { MazeContext } from "../context/maze";
@@ -23,13 +22,13 @@ const options = [
   { value: "left", label: "Left" },
   { value: "diagonalUpperLeft", label: "Diagonal Upper Left" },
   { value: "diagonalUpperRight", label: "Diagonal Upper Right" },
-  { value: "diagonalDownLeft", label: "Diagonal Down Left" },
-  { value: "diagonalDownRight", label: "Diagonal Down Right" },
+  { value: "diagonalDownLeft", label: "Diagonal Lower Left" },
+  { value: "diagonalDownRight", label: "Diagonal Lower Right" },
 ];
 
 function MazeForm() {
   const { formValue, setFormValue } = useContext(MazeContext);
-  const { rows, columns, selectedValue } = formValue;
+  const { rows, columns, selectedValue, diections } = formValue;
 
   const handleChanges = (e) => {
     if (e?.target) {
@@ -88,16 +87,21 @@ function MazeForm() {
           </Stack>
         </RadioGroup>
       </FormControl>
-      <Box mt={4}>
-        <FormLabel>Select directions: </FormLabel>
+      <FormControl isInvalid={diections.length < 1} mt={4}>
+        <FormLabel htmlFor="directions">Select Directions:</FormLabel>
         <Select
           onChange={setDierctions}
           closeMenuOnSelect={false}
           components={animatedComponents}
           options={options}
           isMulti
+          title="Select Direction"
+          name="directions"
         />
-      </Box>
+        <FormErrorMessage>
+          Select at least 1 diection to travel
+        </FormErrorMessage>
+      </FormControl>
     </>
   );
 }

@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Accordion,
   AccordionItem,
@@ -16,7 +14,7 @@ import { ChevronDownIcon } from "@chakra-ui/icons";
 
 const Instructions = ({ data }) => {
   return (
-    <Flex align={"center"} justify={"center"}>
+    <Flex align={"center"} justify={"center"} id="instructions">
       <Container>
         <Accordion allowMultiple width="100%" maxW="lg" bg="white" rounded="lg">
           {data?.map((item) => (
