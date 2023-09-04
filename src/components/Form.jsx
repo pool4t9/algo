@@ -28,7 +28,7 @@ const options = [
 
 function MazeForm() {
   const { formValue, setFormValue } = useContext(MazeContext);
-  const { rows, columns, selectedValue, diections } = formValue;
+  const { rows, columns, selectedValue, directions } = formValue;
 
   const handleChanges = (e) => {
     if (e?.target) {
@@ -37,7 +37,7 @@ function MazeForm() {
   };
 
   const setDierctions = (values) => {
-    setFormValue({ ...formValue, diections: values.map((item) => item.value) });
+    setFormValue({ ...formValue, directions: values.map((item) => item.value) });
   };
 
   return (
@@ -87,7 +87,7 @@ function MazeForm() {
           </Stack>
         </RadioGroup>
       </FormControl>
-      <FormControl isInvalid={diections.length < 1} mt={4}>
+      <FormControl isInvalid={directions.length < 1} mt={4}>
         <FormLabel htmlFor="directions">Select Directions:</FormLabel>
         <Select
           onChange={setDierctions}

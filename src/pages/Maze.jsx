@@ -5,6 +5,7 @@ import MazeForm from "../components/Form";
 import { MazeContext } from "../context/maze";
 import Instructions from "../components/Instructions";
 import mazeInstruction from "../rules/maze";
+import mazeWorker from "../worker/mazeWorker";
 
 function Maze() {
   const [paths, setPaths] = useState([]);
@@ -23,9 +24,9 @@ function Maze() {
     rows: 3,
     columns: 3,
     selectedValue: "start",
-    diections: [],
+    directions: [],
   });
-  const { rows, columns, selectedValue, diections } = formValue;
+  const { rows, columns, selectedValue, directions } = formValue;
   useEffect(() => {
     const { start, end } = points;
     if (rows >= 3 && columns >= 3) {
@@ -75,27 +76,44 @@ function Maze() {
 
   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
-  const helper = useCallback(() => {
-    const { start, end } = points;
-    return findPath(
-      start[0],
-      start[1],
-      end[0],
-      end[1],
-      Number(rows),
-      Number(columns),
-      matrix,
-      diections
-    );
-  }, [columns, matrix, points, rows, diections]);
+  // const helper = useCallback(() => {
+  //   const { start, end } = points;
+  //   return findPath(
+  //     start[0],
+  //     start[1],
+  //     end[0],
+  //     end[1],
+  //     Number(rows),
+  //     Number(columns),
+  //     matrix,
+  //     directions
+  //   );
+  // }, [columns, matrix, points, rows, directions]);
 
   const generatePossiblePaths = async (e) => {
     e.preventDefault();
+    const worker = new Worker(mazeWorker);
+    const { start, end } = points;
     setLoading(true);
     setPaths([]);
-    await delay(100);
-    setPaths(helper());
-    setLoading(false);
+    worker.postMessage({
+      i: start[0],
+      j: start[1],
+      ii: end[0],
+      jj: end[1],
+      rows: Number(rows),
+      columns: Number(columns),
+      matrix,
+      directions,
+    });
+    worker.onmessage = (e) => {
+      setLoading(false);
+      console.log("data", e.data);
+      setPaths(e.data.paths)
+    };
+    
+    // await delay(100);
+    // setPaths(helper());
   };
 
   return (
@@ -114,7 +132,7 @@ function Maze() {
                 {matrix.map((mat, i) => {
                   return mat.map((item, j) => (
                     <div
-                      key={Math.random() * 100 * i * j}
+                      key={Math.random() * 100 * (i + 1) * (j + 1)}
                       className={`main-col  ${item === -1 && "bg-orange"} ${
                         item === 0 && "bg-red"
                       } ${item === 2 && "bg-green"}`}
