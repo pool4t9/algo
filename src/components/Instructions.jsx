@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Accordion,
   AccordionItem,
@@ -8,78 +6,38 @@ import {
   Flex,
   Text,
   Container,
+  OrderedList,
+  ListItem,
 } from "@chakra-ui/react";
 
 import { ChevronDownIcon } from "@chakra-ui/icons";
 
-const Instructions = () => {
+const Instructions = ({ data }) => {
   return (
-    <Flex align={"center"} justify={"center"}>
+    <Flex align={"center"} justify={"center"} id="instructions">
       <Container>
         <Accordion allowMultiple width="100%" maxW="lg" bg="white" rounded="lg">
-          <AccordionItem>
-            <AccordionButton
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between"
-              p={4}
-              _hover={{ bg: "gray.100" }}
-            >
-              <Text fontSize="md" color="gray.800">
-                What is this project about?
-              </Text>
-              <ChevronDownIcon fontSize="24px" />
-            </AccordionButton>
-            <AccordionPanel pb={4}>
-              <Text color="gray.600">
-                Chakra UI is a simple and modular component library that gives
-                developers the building blocks they need to create web
-                applications.
-              </Text>
-            </AccordionPanel>
-          </AccordionItem>
-          <AccordionItem>
-            <AccordionButton
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between"
-              p={4}
-              _hover={{ bg: "gray.100" }}
-              color="gray.800"
-            >
-              <Text fontSize="md">How To use it.</Text>
-              <ChevronDownIcon fontSize="24px" />
-            </AccordionButton>
-            <AccordionPanel pb={4}>
-              <Text color="gray.600">
-                Chakra UI offers a variety of advantages including ease of use,
-                accessibility, and customization options. It also provides a
-                comprehensive set of UI components and is fully compatible with
-                React.
-              </Text>
-            </AccordionPanel>
-          </AccordionItem>
-          <AccordionItem>
-            <AccordionButton
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between"
-              p={4}
-              _hover={{ bg: "gray.100" }}
-              color="gray.800"
-            >
-              <Text fontSize="md">Topics Covered</Text>
-              <ChevronDownIcon fontSize="24px" />
-            </AccordionButton>
-            <AccordionPanel pb={4}>
-              <Text color="gray.600">
-                To get started with Chakra UI, you can install it via npm or
-                yarn, and then import the components you need in your project.
-                The Chakra UI documentation is also a great resource for getting
-                started and learning more about the library.
-              </Text>
-            </AccordionPanel>
-          </AccordionItem>
+          {data?.map((item) => (
+            <AccordionItem key={item.id}>
+              <AccordionButton
+                display="flex"
+                alignItems="center"
+                justifyContent="space-between"
+                p={4}
+                _hover={{ bg: "gray.100" }}
+              >
+                <Text fontSize="md" color="gray.800">
+                  {item.name}
+                </Text>
+                <ChevronDownIcon fontSize="24px" />
+              </AccordionButton>
+              <AccordionPanel pb={4}>
+                <Text color="gray.600">{item.description}</Text>
+                {item.steps && <Steps list={item.steps} />}
+                {item?.childrens && <Instructions data={item.childrens} />}
+              </AccordionPanel>
+            </AccordionItem>
+          ))}
         </Accordion>
       </Container>
     </Flex>
@@ -87,3 +45,17 @@ const Instructions = () => {
 };
 
 export default Instructions;
+
+const Steps = ({ list }) => {
+  return (
+    <OrderedList>
+      {list.map((step, idx) => (
+        <ListItem key={idx}>
+          <Text fontSize="md" color="gray.800">
+            {step}
+          </Text>
+        </ListItem>
+      ))}
+    </OrderedList>
+  );
+};
