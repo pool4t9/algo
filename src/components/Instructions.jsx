@@ -8,9 +8,11 @@ import {
   Container,
   OrderedList,
   ListItem,
+  Tag,
 } from "@chakra-ui/react";
 
 import { ChevronDownIcon } from "@chakra-ui/icons";
+import DOMPurify from "dompurify";
 
 const Instructions = ({ data }) => {
   return (
@@ -32,8 +34,11 @@ const Instructions = ({ data }) => {
                 <ChevronDownIcon fontSize="24px" />
               </AccordionButton>
               <AccordionPanel pb={4}>
-                <Text color="gray.600">{item.description}</Text>
+                {item.description && (
+                  <Text color="gray.600">{item.description}</Text>
+                )}
                 {item.steps && <Steps list={item.steps} />}
+                {item.topics && <TagList list={item.topics} />}
                 {item?.childrens && <Instructions data={item.childrens} />}
               </AccordionPanel>
             </AccordionItem>
@@ -51,11 +56,23 @@ const Steps = ({ list }) => {
     <OrderedList>
       {list.map((step, idx) => (
         <ListItem key={idx}>
-          <Text fontSize="md" color="gray.800">
-            {step}
-          </Text>
+          <Text
+            fontSize="md"
+            color="gray.800"
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(step) }}
+          ></Text>
         </ListItem>
       ))}
     </OrderedList>
+  );
+};
+
+const TagList = ({ list }) => {
+  return (
+    <>
+      {list.map((step, idx) => (
+        <Tag className="chips" key={idx}> {step} </Tag>
+      ))}
+    </>
   );
 };

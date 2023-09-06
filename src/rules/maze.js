@@ -3,7 +3,7 @@ const mazeInstruction = [
     id: "1",
     name: "What is project about",
     description:
-      "In the maze matrix, 0 means the block is a dead end and 1 means the block can be used in the path from source to destination. The rat can move in 4 directions",
+      "In the maze matrix, 0 means the block is a dead end and 1 means the block can be used in the path from source to destination. The rat can move in all 8 directions",
     childrens: [],
   },
   {
@@ -25,13 +25,13 @@ const mazeInstruction = [
     name: "Algorithm",
     description: " ",
     steps: [
-      "Create a paths[] array, and a another array ds[] (data structure) which will we used to store indexs where rat can move to reach the destination",
-      "Create a recursive function, which takes initial maze, paths[], ds[] position of rat (i, j).",
-      "if the position is out of the maze or the position is not valid (maze[i][j]==0) then return.",
-      "Mark the position maze[i][j] as 0, push the index to ds[] and check if the current position is destination or not. If destination is reached push the ds to paths[]",
-      "Recursively call for position (i+1, j) , (i-1, j), (i,j+1) and (i,j-1).",
-      "Unmark position (i, j) and pop the (i,j) from ds[], i.e maze[i][j] = 1.",
-      "In final step, we will create solution from generated paths[] from array of indexs",
+      "<strong>Initialization</strong>: We start by creating two arrays, paths[] and ds[], which will be used to store information about the rat's movement in the maze.",
+      "<strong>Recursive Function:</strong>: We define a recursive function that will explore the maze and find paths from the current position to the destination.",
+      "<strong>Base Cases</strong>: <ul> <li>We ensure that the current position (i, j) is within the maze boundaries. If the rat goes out of bounds, we stop exploring in that direction.</li> <li> We check if the current position (i, j) is a valid move. In other words, is it an open path (not a wall or an obstacle)? If it's not a valid move, we don't proceed in that direction. </li> <li>We also check if the current block has already been visited. If it has, we avoid revisiting it to prevent infinite loops.</li> <li>We also check if the current block has already been visited. If it has, we avoid revisiting it to prevent infinite loops.</li> </ul> ",
+      "<strong>Marking the Position</strong>: <ul> <li>If the current position is valid and has not been visited, we mark it as visited by setting vis[i][j] to 0.</li> <li>We record the current position (i, j) by pushing it onto the ds[] array.</li> <li>We check if the current position is the destination. If it is, we have found a valid path, so we add the ds[] array (which contains the path) to the paths[] array.</li> </ul>",
+      "<strong>Recursive Calls</strong>: After marking the current position and checking for a destination, we recursively explore all possible directions:<ul><li>(i+1, j): Moving down\n (i-1, j): Moving up\n (i, j+1): Moving right\n (i, j-1): Moving left\n (i-1, j-1): Moving diagonally up-left\n (i-1, j+1): Moving diagonally up-right\n (i+1, j-1): Moving diagonally down-left\n (i+1, j+1): Moving diagonally down-right</li></ul>",
+      "<strong>Unmarking the Position</strong>: After exploring all possible paths from the current position, we unmark the current position by setting maze[i][j] back to 1. This allows us to backtrack and explore other paths.",
+      "<strong>Final Step</strong>: Once the recursive calls have explored all paths, we have stored valid paths in the paths[] array",
     ],
     childrens: [],
   },
@@ -47,8 +47,13 @@ const mazeInstruction = [
   {
     id: "6",
     name: "Topics covered",
-    description: "backtracing, javascript",
+    description: "",
     childrens: [],
+    topics: [
+      "Backtracing",
+      "Javascript",
+      "ReactJs (useState, useEffect, useContext)",
+    ],
   },
 ];
 
