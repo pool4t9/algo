@@ -3,7 +3,7 @@ const mazeInstruction = [
     id: "1",
     name: "What is project about",
     description:
-      "In the maze matrix, 0 means the block is a dead end and 1 means the block can be used in the path from source to destination. The rat can move in all 8 directions",
+      "In the maze matrix, 0 means the block is a dead end and 1 means the block can be used in the path from source to destination. The rat can move upto in all 8 directions and it will return all the possible ways to reach the destination from starting point.",
     childrens: [],
   },
   {
