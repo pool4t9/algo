@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import TreeVisualizer from "./pages/TreeVisualizer";
 import Todo from "./pages/Todo";
+import Login from "./pages/Login";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/maze" element={<Maze />} />
         <Route path="/tree-visualizer" element={<TreeVisualizer />} />
         <Route path="/todo" element={<Todo />} />
+        <Route path="/login" element={<Login />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </main>
