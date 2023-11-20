@@ -58,3 +58,52 @@ body {
   padding: 5px;
   margin: 2px;
 }
+
+/* 
+* CSS for Tic tac toe
+ */
+
+ .main-container-ttt {
+  max-width: 300px;
+  width: 100%;
+  margin: 50px auto;
+  padding-top: 0;
+  /* background: #194018 url("/src/assets/bg2.png"); */
+}
+
+.main-row-ttt {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.main-col-ttt {
+  width: 100px;
+  height: 75px;
+  /* border: 1px solid #ddd; */
+  flex-basis: 33.33%;
+}
+
+#ttt0-1{
+  border-right: 2px solid black;
+  border-bottom: 2px solid black;
+  border-left: 2px solid black;
+  /* border-bottom-right-radius: 10px; */
+}
+
+#ttt1-0{
+  border-right: 2px solid black;
+  border-bottom: 2px solid black;
+  border-top: 2px solid black;
+}
+
+#ttt1-2{
+  border-left: 2px solid black;
+  border-bottom: 2px solid black;
+  border-top: 2px solid black;
+}
+
+#ttt2-1{
+  border-right: 2px solid black;
+  border-top: 2px solid black;
+  border-left: 2px solid black;
+}
