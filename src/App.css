@@ -63,47 +63,56 @@ body {
 * CSS for Tic tac toe
  */
 
- .main-container-ttt {
-  max-width: 300px;
-  width: 100%;
+.main-container-ttt {
+  background-image: url("./assets/bg2.png");
+  height: 300px;
+  width: 300px;
   margin: 50px auto;
-  padding-top: 0;
-  /* background: #194018 url("/src/assets/bg2.png"); */
+  position: relative;
+  display: block;
+  border-radius: 22px;
+  border: 3px solid #9b5c24;
+}
+
+.main-container-ttt:before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: #b48860;
+  opacity: 0.8;
+  border-radius: 18px;
 }
 
 .main-row-ttt {
   display: flex;
   flex-wrap: wrap;
+  padding: 20px;
+  gap: 3px;
 }
 
 .main-col-ttt {
-  width: 100px;
-  height: 75px;
-  /* border: 1px solid #ddd; */
-  flex-basis: 33.33%;
+  width: 31%;
+  height: 84px;
+  border: 1px solid #613006;
+  flex-basis: 31%;
+  position: relative;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-#ttt0-1{
-  border-right: 2px solid black;
-  border-bottom: 2px solid black;
-  border-left: 2px solid black;
-  /* border-bottom-right-radius: 10px; */
+.main-col-ttt::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: #613006;
+  opacity: 0.8;
+  border-radius: 4px;
 }
 
-#ttt1-0{
-  border-right: 2px solid black;
-  border-bottom: 2px solid black;
-  border-top: 2px solid black;
-}
-
-#ttt1-2{
-  border-left: 2px solid black;
-  border-bottom: 2px solid black;
-  border-top: 2px solid black;
-}
-
-#ttt2-1{
-  border-right: 2px solid black;
-  border-top: 2px solid black;
-  border-left: 2px solid black;
+i{
+  font-size: 40px;
 }
