@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
-import { findPath } from "../utils";
+import {  useEffect, useState } from "react";
 import { Box, Button, Container, SimpleGrid, Spinner } from "@chakra-ui/react";
 import MazeForm from "../components/Form";
 import { MazeContext } from "../context/maze";
@@ -74,7 +73,7 @@ function Maze() {
     setMatrix(newMatrix);
   };
 
-  const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+  // const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
   // const helper = useCallback(() => {
   //   const { start, end } = points;
