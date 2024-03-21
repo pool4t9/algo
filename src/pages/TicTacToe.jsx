@@ -1,11 +1,19 @@
 import { useState } from "react";
-import { Flex, Button } from "@chakra-ui/react";
+import {
+  Flex,
+  Button,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+} from "@chakra-ui/react";
 
 const TicTacToe = () => {
   const [player, setPlayer] = useState(1);
   const [board, setBoard] = useState(
     new Array(3).fill(0).map(() => new Array(3).fill(0))
   );
+  const [winnerMessage, setWinnerMessage] = useState("");
   const makeMove = (e, i, j) => {
     e.preventDefault();
     const isDone = yourTurn(player, i, j);
@@ -20,7 +28,7 @@ const TicTacToe = () => {
       setBoard(newBoard);
       const winner = checkWinner(i, j);
       if (winner != -1) {
-        alert(`Player ${winner} is winner`);
+        setWinnerMessage(`Player ${winner} is winner`);
       }
       setPlayer(player === 1 ? 2 : 1);
       return true;
@@ -29,7 +37,7 @@ const TicTacToe = () => {
   }
 
   function checkWinner(x, y) {
-    console.log(x, y)
+    console.log(x, y);
     // let winner = 1;
     // for (let i = 0; i < board.length; i++) {
     //   // for column
@@ -120,6 +128,13 @@ const TicTacToe = () => {
           {player == 1 ? "Player 1" : "Player 2"}
         </Button>
       </Flex>
+      {winnerMessage && (
+        <Alert status="success">
+          <AlertIcon />
+          <AlertTitle>Winner</AlertTitle>
+          <AlertDescription>{winnerMessage}</AlertDescription>
+        </Alert>
+      )}
     </div>
   );
 };

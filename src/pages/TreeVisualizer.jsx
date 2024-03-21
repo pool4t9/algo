@@ -1,7 +1,6 @@
-import React from "react";
 import root from "../rules/Tree";
 import Tree from "../components/Tree";
-import { Container, Flex } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 
 const TreeVisualizer = () => {
   return (

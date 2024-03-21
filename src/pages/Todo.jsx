@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Box } from "@chakra-ui/react";
 import Editor from "../components/Editor";
 
