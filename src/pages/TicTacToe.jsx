@@ -7,6 +7,8 @@ import {
   AlertTitle,
   AlertDescription,
 } from "@chakra-ui/react";
+import { IconButton } from "@chakra-ui/react";
+import { RepeatClockIcon } from "@chakra-ui/icons";
 
 const TicTacToe = () => {
   const [player, setPlayer] = useState(1);
@@ -25,15 +27,24 @@ const TicTacToe = () => {
     if (!board[i][j]) {
       const newBoard = [...board];
       newBoard[i][j] = player;
-      setBoard(newBoard);
       const winner = checkWinner(i, j);
       if (winner != -1) {
         setWinnerMessage(`Player ${winner} is winner`);
+        setBoard(new Array(3).fill(0).map(() => new Array(3).fill(0)));
+        setPlayer(0);
       }
+      setBoard(newBoard);
       setPlayer(player === 1 ? 2 : 1);
       return true;
     }
     return false;
+  }
+
+  function restartGame(e) {
+    e.preventDefault();
+    setBoard(new Array(3).fill(0).map(() => new Array(3).fill(0)));
+    setWinnerMessage("");
+    setPlayer(1);
   }
 
   function checkWinner(x, y) {
@@ -127,6 +138,15 @@ const TicTacToe = () => {
         >
           {player == 1 ? "Player 1" : "Player 2"}
         </Button>
+        <IconButton
+          px={4}
+          mx={5}
+          fontSize={"sm"}
+          rounded={"full"}
+          _disabled={true}
+          icon={<RepeatClockIcon />}
+          onClick={restartGame}
+        />
       </Flex>
       {winnerMessage && (
         <Alert status="success">
