@@ -113,6 +113,30 @@ body {
   border-radius: 4px;
 }
 
-i{
+i {
   font-size: 40px;
+}
+
+#home-main-container {
+  display: flex;
+  justify-content: center;
+  height: 90vh;
+  align-items: center;
+}
+
+#main-box {
+  max-width: 660px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.box {
+  width: 200px;
+  height: 200px;
+  background-color: antiquewhite;
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -9,76 +9,82 @@ import {
   Icon,
   useColorModeValue,
   createIcon,
-} from '@chakra-ui/react'
+} from "@chakra-ui/react";
 
 const Hero = () => {
   return (
-    <Container maxW={'3xl'}>
+    <Container maxW={"3xl"}>
       <Stack
         as={Box}
-        textAlign={'center'}
+        textAlign={"center"}
         spacing={{ base: 8, md: 14 }}
-        py={{ base: 20, }}>
+        py={{ base: 20 }}
+      >
         <Heading
           fontWeight={600}
-          fontSize={{ base: '2xl', sm: '4xl', md: '6xl' }}
-          lineHeight={'110%'}>
+          fontSize={{ base: "2xl", sm: "4xl", md: "6xl" }}
+          lineHeight={"110%"}
+        >
           Make things happen <br />
-          <Text as={'span'} color={'green.400'}>
+          <Text as={"span"} color={"green.400"}>
             {/* your audience */}
           </Text>
         </Heading>
-        <Text color={'gray.500'}>
-          Programming is the art of algorithm design and the craft of debugging errant code.
+        <Text color={"gray.500"}>
+          Programming is the art of algorithm design and the craft of debugging
+          errant code.
         </Text>
         <Stack
-          direction={'column'}
+          direction={"column"}
           spacing={3}
-          align={'center'}
-          alignSelf={'center'}
-          position={'relative'}>
+          align={"center"}
+          alignSelf={"center"}
+          position={"relative"}
+        >
           <Button
             as={ReactRouterLink}
-            colorScheme={'green'}
-            bg={'green.400'}
-            rounded={'full'}
+            colorScheme={"green"}
+            bg={"green.400"}
+            rounded={"full"}
             px={6}
-            to={'/maze'}
+            to={"/get-started"}
             _hover={{
-              bg: 'green.500',
-            }}>
+              bg: "green.500",
+            }}
+          >
             Get Started
           </Button>
           <Box>
             <Icon
               as={Arrow}
-              color={useColorModeValue('gray.800', 'gray.300')}
+              color={useColorModeValue("gray.800", "gray.300")}
               w={71}
-              position={'absolute'}
+              position={"absolute"}
               right={-71}
-              top={'10px'}
+              top={"10px"}
             />
             <Text
-              fontSize={'lg'}
-              fontFamily={'Caveat'}
-              position={'absolute'}
-              right={'-125px'}
-              top={'-15px'}
-              transform={'rotate(10deg)'}>
+              fontSize={"lg"}
+              fontFamily={"Caveat"}
+              position={"absolute"}
+              right={"-125px"}
+              top={"-15px"}
+              transform={"rotate(10deg)"}
+            >
               Starting at $0/mo
             </Text>
           </Box>
         </Stack>
       </Stack>
     </Container>
-  )
-}
+  );
+};
 
 export default Hero;
 
 const Arrow = createIcon({
-  displayName: 'Arrow',
-  viewBox: '0 0 72 24',
+  displayName: "Arrow",
+  viewBox: "0 0 72 24",
   path: (
     <path
       fillRule="evenodd"
@@ -87,4 +93,4 @@ const Arrow = createIcon({
       fill="currentColor"
     />
   ),
-})
+});

@@ -1,4 +1,4 @@
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Button, Container, SimpleGrid, Spinner } from "@chakra-ui/react";
 import MazeForm from "../components/Form";
 import { MazeContext } from "../context/maze";
@@ -15,9 +15,13 @@ function Maze() {
     end: [2, 2],
     block: [],
   });
+  const [totelTime, setTotelTime] = useState(0);
   const [style, setStyle] = useState({
     width: "33.33px",
     flexBasis: "33.33px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   });
   const [formValue, setFormValue] = useState({
     rows: 3,
@@ -35,7 +39,11 @@ function Maze() {
       mat[start[0]][start[1]] = -1;
       mat[end[0]][end[1]] = 2;
       setMatrix(mat);
-      setStyle({ width: `${100 / columns}%`, flexBasis: `${100 / columns}%` });
+      setStyle({
+        ...style,
+        width: `${100 / columns}%`,
+        flexBasis: `${100 / columns}%`,
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rows, columns]);
@@ -108,9 +116,10 @@ function Maze() {
     worker.onmessage = (e) => {
       setLoading(false);
       console.log("data", e.data);
-      setPaths(e.data.paths)
+      setPaths(e.data.paths);
+      setTotelTime(e.data.time);
     };
-    
+
     // await delay(100);
     // setPaths(helper());
   };
@@ -158,6 +167,7 @@ function Maze() {
           </Box>
         </SimpleGrid>
       </Container>
+      <div> TotalTime taken: {totelTime}</div>
       <div className=" solution">
         {loading && <Spinner size="xl" />}
         {paths.map((mat, i) => (
